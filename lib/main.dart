@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './models/transaction.dart';
 
 main() => runApp(const ExpensesApp());
 
@@ -7,12 +8,22 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: MyHomePage());
+    return MaterialApp(home: MyHomePage());
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+  MyHomePage({super.key});
+
+  final _transactions = [
+    Transaction(
+        id: 't1',
+        title: 'Novo Tênis de Corrida',
+        value: 310.76,
+        date: DateTime.now()),
+    Transaction(
+        id: 't2', title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +31,50 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Despesas Pessoais'),
       ),
-      body: const Column(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(
+          const SizedBox(
             child: Card(
               elevation: 5,
               child: Text('Gráfico'),
             ),
           ),
-          Card(
-            elevation: 5,
-            child: Text('Lista de transações'),
+          Column(
+            children: _transactions
+                .map((tr) => Card(
+                      child: Row(children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                            color: Colors.purple,
+                          )),
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            'R\$ ${tr.value.toString()}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.purple,
+                            ),
+                          ),
+                        ),
+                        Column(
+                          children: [
+                            Text(tr.title),
+                            Text(
+                              tr.date.toString(),
+                            )
+                          ],
+                        )
+                      ]),
+                    ))
+                .toList(),
           )
         ],
       ),
