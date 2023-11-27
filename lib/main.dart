@@ -1,5 +1,5 @@
+import 'package:despesas_pessoais/components/transaction_list.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import './models/transaction.dart';
 
 main() => runApp(const ExpensesApp());
@@ -44,52 +44,7 @@ class MyHomePage extends StatelessWidget {
               child: Text('Gráfico'),
             ),
           ),
-          Column(
-            children: _transactions
-                .map((tr) => Card(
-                      elevation: 5,
-                      child: Row(children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 10,
-                          ),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                            color: Colors.purple,
-                          )),
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            'R\$ ${tr.value.toStringAsFixed(2)}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.purple,
-                            ),
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              tr.title,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              DateFormat('d MMM y').format(tr.date),
-                              style: TextStyle(
-                                color: Colors.grey[600],
-                              ),
-                            )
-                          ],
-                        )
-                      ]),
-                    ))
-                .toList(),
-          ),
+          TransactionList(_transactions),
           Card(
             child: Padding(
               padding: const EdgeInsets.all(10),
@@ -105,8 +60,7 @@ class MyHomePage extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                     style: TextButton.styleFrom(foregroundColor: Colors.purple),
                     child: const Text('Nova Transação'),
                   ),
